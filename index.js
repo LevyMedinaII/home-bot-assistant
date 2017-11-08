@@ -2,6 +2,7 @@ var express = require('express')
 var lt = require('localtunnel')
 var bodyParser = require('body-parser')
 var app = express()
+var PythonShell = require('python-shell');
 require('dotenv').config()
 
 const port = 5050
@@ -39,6 +40,38 @@ app.get('/menu', (req, res) => {
         {
             "messages": [
                 {"text": "Here are the list of appliances available: \n" + menu}
+            ]
+        }
+    )
+})
+
+app.post('/on/:light_id', (req, res, next) => {
+    var lightId = req.params.light_id
+    // @TODO: Control rpi, set Write Pin, WRITE HIGH
+    PythonShell.run('relayon.py', function(err){
+        if(err) throw err;
+        console.log('finished');
+    });
+    res.send(
+        {
+            "messages": [
+                {"text": "You just turned on a lightblub! WOWWW!"}
+            ]
+        }
+    )
+})
+
+app.post('/off/:light_id', (req, res, next) => {
+    var lightId = req.params.light_id
+    // @TODO: Control rpi, set Write Pin, WRITE LOW
+        PythonShell.run('relayoff.py', function(err){
+        if(err) throw err;
+        console.log('finished');
+    });
+        res.send(
+        {
+            "messages": [
+                {"text": "You just turned off a lightblub!"}
             ]
         }
     )

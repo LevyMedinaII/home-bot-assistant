@@ -6,7 +6,7 @@ var PythonShell = require('python-shell');
 raspi.init(() => {
     const i2c = new I2C();
 
-    console.log(i2c.readByteSync(0x18));
+   // console.log(i2c.readByteSync(0x18));
     
 }) 
 
