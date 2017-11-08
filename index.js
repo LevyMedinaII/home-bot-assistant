@@ -5,7 +5,7 @@ var app = express()
 require('dotenv').config()
 
 const port = 5050
-
+var rpi = require('./rpi/rpi.js')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
