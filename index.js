@@ -19,5 +19,15 @@ var tunnel = localtunnel( process.env.port || port,
         tunnel.url;
 }) 
 
+app.get('/test', (req, res) => {
+    res.send(
+        {
+            set_attributes: {
+                token_is_valid: true
+            }
+        }
+    )
+})
+
 app.listen(process.env.port || port)
 console.log('App running in port:', process.env.port || port)
