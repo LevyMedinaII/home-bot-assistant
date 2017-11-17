@@ -6,8 +6,6 @@ require('dotenv').config()
 
 const port = 5050
 
-var lights = require('./lights/lights')
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -20,6 +18,9 @@ var tunnel = lt( process.env.port || port,
         tunnel.url;
 }) 
 
+app.get('/', (req, res) => {
+    res.send('Online!')
+})
 app.get('/test', (req, res) => {
     console.log('/test called')
     res.send(
@@ -27,6 +28,18 @@ app.get('/test', (req, res) => {
             set_attributes: {
                 token_is_valid: true
             }
+        }
+    )
+})
+
+app.get('/menu', (req, res) => {
+    console.log('/menu called')
+    var menu = "";
+    res.send(
+        {
+            "messages": [
+                {"text": "Here are the list of appliances available: \n" + menu}
+            ]
         }
     )
 })
