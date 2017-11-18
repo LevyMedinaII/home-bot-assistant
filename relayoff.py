@@ -77,15 +77,15 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, endProcess)
     
-    if sys.argv[0] == 1:
+    if sys.argv[1] == 1:
         relay.OFF_1()
-    elif sys.argv[0] == 2:
+    elif sys.argv[1] == 2:
         relay.OFF_2()
-    elif sys.argv[0] == 3:
+    elif sys.argv[1] == 3:
         relay.OFF_3()
-    elif sys.argv[0] == 4:
+    elif sys.argv[1] == 4:
         relay.OFF_4()
-    elif sys.argv[0] == 5:
+    elif sys.argv[1] == 5:
         relay.ALLOFF()
     
         
