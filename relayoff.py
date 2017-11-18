@@ -76,13 +76,16 @@ if __name__ == "__main__":
         sys.exit()
 
     signal.signal(signal.SIGINT, endProcess)
-    options={
-        1: relay.OFF_1,
-        2: relay.OFF_2,
-        3: relay.OFF_3,
-        4: relay.OFF_4,
-        5: relay.ALLOFF
-    }
-    options.get(sys.argv[0])()
+    
+    if sys.argv[0] == 1:
+        relay.OFF_1()
+    elif sys.argv[0] == 2:
+        relay.OFF_2()
+    elif sys.argv[0] == 3:
+        relay.OFF_3()
+    elif sys.argv[0] == 4:
+        relay.OFF_4()
+    elif sys.argv[0] == 5:
+        relay.ALLOFF()
     
         

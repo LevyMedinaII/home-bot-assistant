@@ -79,12 +79,14 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, endProcess)
     
-    options={
-        1: relay.ON_1,
-        2: relay.ON_2,
-        3: relay.ON_3,
-        4: relay.ON_4,
-        5: relay.ALLON
-    }
-    options.get(sys.argv[0])()
+    if sys.argv[0] == 1:
+        relay.ON_1()
+    elif sys.argv[0] == 2:
+        relay.ON_2()
+    elif sys.argv[0] == 3:
+        relay.ON_3()
+    elif sys.argv[0] == 4:
+        relay.ON_4()
+    elif sys.argv[0] == 5:
+        relay.ALLON()
     
