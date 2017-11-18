@@ -35,7 +35,8 @@ app.get('/test', (req, res) => {
 
 app.get('/menu', (req, res) => {
     console.log('/menu called')
-    var menu = "";
+    var menu = ""
+    var buttons = []
     res.send(
         {
             "messages": [
@@ -45,33 +46,33 @@ app.get('/menu', (req, res) => {
     )
 })
 
-app.post('/on/:light_id', (req, res, next) => {
-    var lightId = req.params.light_id
+app.post('/on/:relay_id', (req, res, next) => {
+    var options = { args: [req.params.relay_id]} 
     // @TODO: Control rpi, set Write Pin, WRITE HIGH
-    PythonShell.run('relayon.py', function(err){
+    PythonShell.run('relayon.py', options, function(err, res){
         if(err) throw err;
         console.log('finished');
     });
     res.send(
         {
             "messages": [
-                {"text": "You just turned on a lightblub! WOWWW!"}
+                {"text": `You just turned on lightbulb ${req.params.relay_id}!`}
             ]
         }
     )
 })
 
-app.post('/off/:light_id', (req, res, next) => {
-    var lightId = req.params.light_id
+app.post('/off/:relay_id', (req, res, next) => {
+    var options = { args: [req.params.relay_id] }
     // @TODO: Control rpi, set Write Pin, WRITE LOW
-        PythonShell.run('relayoff.py', function(err){
-        if(err) throw err;
-        console.log('finished');
+        PythonShell.run('relayoff.py', options, function(err, res){
+        if(err) throw err
+        console.log('finished')
     });
         res.send(
         {
             "messages": [
-                {"text": "You just turned off a lightblub!"}
+                {"text": `You just turned off a lightblub ${req.params.relay_id}!`}
             ]
         }
     )

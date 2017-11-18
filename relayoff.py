@@ -75,7 +75,14 @@ if __name__ == "__main__":
     def endProcess(signalnum=None, handler=None):
         sys.exit()
 
-
-
     signal.signal(signal.SIGINT, endProcess)
-    relay.OFF_1()
+    options={
+        1: relay.OFF_1(),
+        2: relay.OFF_2(),
+        3: relay.OFF_3(),
+        4: relay.OFF_4(),
+        5: relay.ALLOFF()
+    }
+    options[sys.argv[0]]()
+    
+        
