@@ -86,5 +86,5 @@ if __name__ == "__main__":
         4: relay.ON_4,
         5: relay.ALLON
     }
-    options[int(sys.argv[0])]()
+    options.get(sys.argv[0])()
     
