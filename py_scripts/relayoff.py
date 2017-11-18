@@ -72,33 +72,18 @@ class Relay():
 if __name__ == "__main__":
     relay = Relay()
 
-    # Called on process interruption. Set all pins to "Input" default mode.
     def endProcess(signalnum=None, handler=None):
-        relay.ALLOFF()
         sys.exit()
 
-
     signal.signal(signal.SIGINT, endProcess)
-
-    while True:
-        ct = '1on'
-        if ct == '1on':
-            relay.ON_1()
-        elif ct == '2on':
-            relay.ON_2()
-        elif ct == '3on':
-            relay.ON_3()
-        elif ct == '4on':
-            relay.ON_4()
-        elif ct == '1off':
-            relay.OFF_1()
-        elif ct == '2off':
-            relay.OFF_2()
-        elif ct == '3off':
-            relay.OFF_3()
-        elif ct == '4off':
-            relay.OFF_4()
-        elif ct == 'allon':
-            relay.ALLON()
-        elif ct == 'alloff':
-            relay.ALLOFF()
+    
+    if sys.argv[1] == '1':
+        relay.OFF_1()
+    elif sys.argv[1] == '2':
+        relay.OFF_2()
+    elif sys.argv[1] == '3':
+        relay.OFF_3()
+    elif sys.argv[1] == '4':
+        relay.OFF_4()
+    elif sys.argv[1] == '5':
+        relay.ALLOFF()
