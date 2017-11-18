@@ -46,6 +46,7 @@ app.get('/menu', (req, res) => {
     )
 })
 
+/* Relay Controls */
 app.post('/on/:relay_id', (req, res, next) => {
     var options = { args: [req.params.relay_id], pythonPath: './py_scripts' } 
     // @TODO: Control rpi, set Write Pin, WRITE HIGH
@@ -78,6 +79,7 @@ app.post('/off/:relay_id', (req, res, next) => {
     )
 })
 
+/* Relay Status */
 app.get('/status/:relay_id', (req, res, next) => {
     var relay_id = req.params.relay_id
     var options = { args: [relay_id], pythonPath: './py_scripts'  }
@@ -111,7 +113,7 @@ app.get('/status/all', (req, res, next) => {
         status[1] = result[1] ? 'ON' : 'OFF'
         status[2] = result[2] ? 'ON' : 'OFF'
         status[3] = result[3] ? 'ON' : 'OFF'
-        
+
         res.send({
             "messages": [
                 {
