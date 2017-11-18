@@ -77,12 +77,12 @@ if __name__ == "__main__":
 
     signal.signal(signal.SIGINT, endProcess)
     options={
-        1: relay.OFF_1(),
-        2: relay.OFF_2(),
-        3: relay.OFF_3(),
-        4: relay.OFF_4(),
-        5: relay.ALLOFF()
+        1: relay.OFF_1,
+        2: relay.OFF_2,
+        3: relay.OFF_3,
+        4: relay.OFF_4,
+        5: relay.ALLOFF
     }
-    options[sys.argv[0]]
+    options[sys.argv[0]]()
     
         
