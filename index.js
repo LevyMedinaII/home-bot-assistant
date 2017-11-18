@@ -19,9 +19,7 @@ var tunnel = lt( process.env.port || port,
         tunnel.url;
 }) 
 
-app.get('/', (req, res) => {
-    res.send('Online!')
-})
+/* Chatfuel Utilities */
 app.get('/test', (req, res) => {
     console.log('/test called')
     res.send(
@@ -46,6 +44,7 @@ app.get('/menu', (req, res) => {
     )
 })
 
+/*-- RASPBERRY PI CONTROLLERS --*/
 /* Relay Controls */
 app.post('/on/:relay_id', (req, res, next) => {
     var options = { args: [req.params.relay_id], pythonPath: './py_scripts' } 
