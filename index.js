@@ -46,32 +46,58 @@ app.get('/menu', (req, res) => {
 /*-- RASPBERRY PI CONTROLLERS --*/
 /* Relay Controls */
 app.post('/on/:relay_id', (req, res, next) => {
-    var options = { args: [req.params.relay_id] } 
+    var names = [
+        req.body.appliance_1_name,
+        req.body.appliance_2_name,
+        req.body.appliance_3_name,
+        req.body.appliance_4_name
+    ]
+    var relay_id = req.params.relay_id
+    var options = { args: [relay_id] } 
     // @TODO: Control rpi, set Write Pin, WRITE HIGH
     PythonShell.run('relayon.py', options, (err, res) => {
         if(err) throw err;
         console.log('finished')
     })
+    var msg ="Error encountered. Please restart me :("
+    if (parseInt(relay_id) < 5) {
+        msg = `You just turned on ${names[parseInt(relay_id)-1]}!`
+    } else if (parseInt(relay_id) == 5){
+        msg = 'You turned on all four appliances!'
+    }
     res.send(
         {
             "messages": [
-                {"text": `You just turned on lightbulb ${req.params.relay_id}!`}
+                {"text": msg}
             ]
         }
     )
 })
 
 app.post('/off/:relay_id', (req, res, next) => {
-    var options = { args: [req.params.relay_id]  }
+    var names = [
+        req.body.appliance_1_name,
+        req.body.appliance_2_name,
+        req.body.appliance_3_name,
+        req.body.appliance_4_name
+    ]
+    var relay_id = req.params.relay_id
+    var options = { args: [relay_id]  }
     // @TODO: Control rpi, set Write Pin, WRITE LOW
         PythonShell.run('relayoff.py', options, (err, res) => {
         if(err) throw err
         console.log('finished')
     })
-        res.send(
+    var msg ="Error encountered. Please restart me :("
+    if (parseInt(relay_id) < 5) {
+        msg = `You just turned off ${names[parseInt(relay_id)-1]}!`
+    } else if (parseInt(relay_id) == 5){
+        msg = 'You turned off all four appliances!'
+    }
+    res.send(
         {
             "messages": [
-                {"text": `You just turned off a lightblub ${req.params.relay_id}!`}
+                {"text": msg}
             ]
         }
     )
@@ -100,6 +126,12 @@ app.post('/off/:relay_id', (req, res, next) => {
 // })
 
 app.get('/status/all', (req, res, next) => {
+    var names = [
+        req.query.appliance_1_name,
+        req.query.appliance_2_name,
+        req.query.appliance_3_name,
+        req.query.appliance_4_name
+    ]
     // @TODO: Control rpi, set Write Pin, WRITE LOW
     PythonShell.run('getdata_all.py', (err, result) => {
         if(err) throw err
@@ -114,7 +146,7 @@ app.get('/status/all', (req, res, next) => {
         res.send({
             "messages": [
                 {
-                    "text": `Appliance 1 is ${status[0]} \nAppliance 2 is ${status[1]} \nAppliance 3 is ${status[2]} \nAppliance 4 is ${status[3]}`
+                    "text": `${names[0]} is ${status[0]} \n${names[1]} is ${status[1]} \n${names[2]} is ${status[2]} \n${names[3]} is ${status[3]}`
                 }
             ]
         })
