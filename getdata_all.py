@@ -127,8 +127,10 @@ if __name__ == "__main__":
     def endProcess(signalnum=None, handler=None):
         sys.exit()
     
-    if sys.argv[1] == '1' or  sys.argv[1] == '2' or sys.argv[1] == '3' or sys.argv[1] == '4':
-        print(relay_get_port_status(int(sys.argv[1])))
+    print(relay_get_port_status(1))
+    print(relay_get_port_status(2))
+    print(relay_get_port_status(3))
+    print(relay_get_port_status(4))
 
     signal.signal(signal.SIGINT, endProcess)
     
