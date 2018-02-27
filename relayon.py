@@ -1,92 +1,33 @@
-# from Seeed Studio Wiki
-# http://wiki.seeed.cc/Raspberry_Pi_Relay_Board_v1.0/
-
-import signal
+import RPi.GPIO as GPIO
+import time
 import sys
 
-import smbus
+GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 
-bus = smbus.SMBus(1)  # 0 = /dev/i2c-0 (port I2C0), 1 = /dev/i2c-1 (port I2C1)
-
-
-class Relay():
-    global bus
-
-    def __init__(self):
-        self.DEVICE_ADDRESS = 0x20  # 7 bit address (will be left shifted to add the read write bit)
-        self.DEVICE_REG_MODE1 = 0x06
-        self.DEVICE_REG_DATA = 0xff
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ON_1(self):
-        print('ON_1...')
-        self.DEVICE_REG_DATA &= ~(0x1 << 0)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ON_2(self):
-        print('ON_2...')
-        self.DEVICE_REG_DATA &= ~(0x1 << 1)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ON_3(self):
-        print('ON_3...')
-        self.DEVICE_REG_DATA &= ~(0x1 << 2)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ON_4(self):
-        print('ON_4...')
-        self.DEVICE_REG_DATA &= ~(0x1 << 3)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def OFF_1(self):
-        print('OFF_1...')
-        self.DEVICE_REG_DATA |= (0x1 << 0)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def OFF_2(self):
-        print('OFF_2...')
-        self.DEVICE_REG_DATA |= (0x1 << 1)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def OFF_3(self):
-        print('OFF_3...')
-        self.DEVICE_REG_DATA |= (0x1 << 2)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def OFF_4(self):
-        print('OFF_4...')
-        self.DEVICE_REG_DATA |= (0x1 << 3)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ALLON(self):
-        print('ALL ON...')
-        self.DEVICE_REG_DATA &= ~(0xf << 0)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
-
-    def ALLOFF(self):
-        print('ALL OFF...')
-        self.DEVICE_REG_DATA |= (0xf << 0)
-        bus.write_byte_data(self.DEVICE_ADDRESS, self.DEVICE_REG_MODE1, self.DEVICE_REG_DATA)
+GPIO.setup(4, GPIO.OUT) #First Appliance: 1
+GPIO.setup(17, GPIO.OUT) #Second Appliance: 2
+GPIO.setup(27, GPIO.OUT) #Third Appliance: 3
+GPIO.setup(22, GPIO.OUT) #Fourth Appliance: 4
 
 
 if __name__ == "__main__":
-    relay = Relay()
 
     def endProcess(signalnum=None, handler=None):
         sys.exit()
-
-
-
-    signal.signal(signal.SIGINT, endProcess)
+    
     
     if sys.argv[1] == '1':
-        relay.ON_1()
+        GPIO.output(4,True)
     elif sys.argv[1] == '2':
-        relay.ON_2()
+        GPIO.output(17,True)
     elif sys.argv[1] == '3':
-        relay.ON_3()
+        GPIO.output(27,True)
     elif sys.argv[1] == '4':
-        relay.ON_4()
+        GPIO.output(22,True)
     elif sys.argv[1] == '5':
-        relay.ALLON()
+        GPIO.output(4,True)
+        GPIO.output(17,True)
+        GPIO.output(27,True)
+        GPIO.output(22,True)
     
