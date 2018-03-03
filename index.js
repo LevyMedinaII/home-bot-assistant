@@ -1,12 +1,15 @@
 var express = require('express')
 var lt = require('localtunnel')
 var bodyParser = require('body-parser')
-var app = express()
 var PythonShell = require('python-shell')
+var cors = require('cors')
 
+var app = express()
+app.use(cors())
 require('dotenv').config()
 
 const port = 5000
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
