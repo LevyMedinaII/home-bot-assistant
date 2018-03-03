@@ -3,6 +3,7 @@ var lt = require('localtunnel')
 var bodyParser = require('body-parser')
 var PythonShell = require('python-shell')
 var cors = require('cors')
+var axios = require('axios')
 
 var app = express()
 app.use(cors())
@@ -43,6 +44,14 @@ app.get('/menu', (req, res) => {
             ]
         }
     )
+})
+
+app.get('/recommend', (req, res) => {
+    console.log('/recommend called')
+    axios.get(`${process.env.hanaaiserver}.localtunnel.me/recommend`)
+        .then(ai_res => {
+            res.send(ai_res)
+        })
 })
 
 /*-- RASPBERRY PI CONTROLLERS --*/
