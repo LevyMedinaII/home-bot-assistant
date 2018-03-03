@@ -48,9 +48,11 @@ app.get('/menu', (req, res) => {
 
 app.get('/recommend', (req, res) => {
     console.log('/recommend called')
-    axios.get(`${process.env.hanaaiserver}.localtunnel.me/recommend`)
+    axios.get(`https://${process.env.ai_link_token}.localtunnel.me/recommend`)
         .then(ai_res => {
             res.send(ai_res)
+        }).catch(err => {
+            res.send(err)
         })
 })
 
