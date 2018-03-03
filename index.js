@@ -2,18 +2,17 @@ var express = require('express')
 var lt = require('localtunnel')
 var bodyParser = require('body-parser')
 var app = express()
-var PythonShell = require('python-shell');
+var PythonShell = require('python-shell')
+
 require('dotenv').config()
 
-const port = 5050
+const port = 5000
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 var tunnel = lt( process.env.port || port,
     { subdomain: process.env.link_token || 'default' },
     (err, tunnel) => {
-        // the assigned public url for your tunnel
-        // i.e. https://abcdefgjhij.localtunnel.me
         console.log('Internet accessible link:', tunnel.url)
         tunnel.url;
 }) 
@@ -65,13 +64,8 @@ app.post('/on/:relay_id', (req, res, next) => {
     } else if (parseInt(relay_id) == 5){
         msg = 'You turned on all four appliances!'
     }
-    res.send(
-        {
-            "messages": [
-                {"text": msg}
-            ]
-        }
-    )
+    
+    res.send({ "messages": [{ "text": msg }] })
 })
 
 app.post('/off/:relay_id', (req, res, next) => {
